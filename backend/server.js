@@ -1,29 +1,49 @@
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
+import Score from "./models/Score.js"
+
+
+
 
 const app=express();
 
 app.use(cors())
 app.use(express.json())
 
-app.get("/test", (req,res) => {
-    res.json({message:"backend is working"})
-})
+mongoose.connect("mongodb://127.0.0.1:27017/sportsDB")
+.then(()=>console.log("mongodb connected"))
+.catch((e)=>console.log(e))
 
-let scores = [];
-app.post("/scores", (req,res) =>{
-    const {name,score,location}=req.body; 
-    const newScore={
-        name,
-        score: Number(score),
-        location,
-    }
-    scores.push(newScore)
-    res.json({success:true , data: req.body})
+
+
+app.post("/scores", async (req,res) =>{
+    
+    const newScore=new Score(req.body)
+    await newScore.save()
+    res.json(newScore)
 })
-app.get("/scores", (req, res) => {
-    const sorted=[...scores].sort((a,b)=>b.score-a.score);
-    res.json(sorted);
+app.get("/scores", async (req, res) => {
+    const {role , location}=req.query
+
+    let query = {}
+    if(role){
+        query.role=role
+    }
+    if(location && location!="All"){
+        query.location=location
+    }
+
+    let sortOption = {}
+
+    if(role==="bowler"){
+        sortOption={wickets: -1}
+    }
+    else {
+        sortOption={runs:-1}
+    }
+    const scores = await Score.find(query).sort(sortOption)
+    res.json(scores)
 });
 
 app.listen(5000, ()=>{

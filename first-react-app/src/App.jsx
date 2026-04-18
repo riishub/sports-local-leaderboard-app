@@ -1,13 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AddScore from "./components/AddScore";
-import Leaderboard from "./components/Leaderboard";
+import HomePage from "./components/HomePage";
+import Cricket from "./SportsList/Cricket";
+import AddScore from "./components/CricketLeaderboard/UploadStats"
+import Leaderboard from "./components/CricketLeaderboard/Leaderboard"
+import UploadStats from "./components/CricketLeaderboard/UploadStats"
+import BowlingLeaderboard from "./components/CricketLeaderboard/BowlingLeaderboard"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Leaderboard/>}/>
-        <Route path="/add" element={<AddScore/>}/>
+        <Route path="/" element={<HomePage/>}/>
+         <Route path="/cricket" element={<Cricket />} />
+          <Route path="/cricleaderboard" element={<Leaderboard/>}></Route>
+          <Route path="/uploadstats" element={<UploadStats/>}></Route>
+          <Route path="/bowlingleaderboard" element={<BowlingLeaderboard/>}></Route>
       </Routes>
     </BrowserRouter>
   );
