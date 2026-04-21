@@ -25,14 +25,42 @@ const handleChange = (e)=>{
 
 
     const handleSubmit = async () => {
-      await fetch("http://localhost:5000/scores", {
+      const username= localStorage.getItem("username")
+      if(!username){
+        alert("Please login first")
+        return;
+      }
+        if (!formData.name || !formData.role) {
+        alert("Name and role are required");
+        return;
+      }
+
+      if (formData.role === "batter" && !formData.runs) {
+        alert("Enter runs");
+        return;
+      }
+
+      if (formData.role === "bowler" && !formData.wickets) {
+        alert("Enter wickets");
+        return;
+      }
+      try{
+      const res = await fetch("http://localhost:5000/scores", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({...formData, runs:Number(formData.runs), wickets:Number(formData.wickets)
+        body: JSON.stringify({...formData, 
+            username,
+            runs:formData.runs ? Number(formData.runs) : undefined
+          , wickets:formData.wickets ? Number(formData.wickets) : undefined
         }), 
       });
+      const data = await res.json()
+      if (!res.ok) {
+        alert(data.error || "Failed to submit");
+        return;
+      }
 
       setSubmittedRole(formData.role);
 
@@ -48,8 +76,12 @@ const handleChange = (e)=>{
       date: "",
       bowlertype: ""
       })
-    };
-
+    }
+  catch(err){
+    console.log(err)
+    alert("Something went wrong")
+  }
+}
 
 
   return (
@@ -71,7 +103,7 @@ const handleChange = (e)=>{
           name="runs"
           value={formData.runs}
           placeholder="runs"
-          onChange={handleChange}
+          onChange={handleChange} 
         />
       )}
 
@@ -130,17 +162,13 @@ const handleChange = (e)=>{
       />
       <button onClick={handleSubmit}>Submit</button>
        
-      {submittedRole === "batter" && (
-  <Link to="/cricleaderboard">
-    <button>Batting Leaderboard</button>
+
+ {submittedRole && (
+  <Link to={`/leaderboard/${submittedRole}`}>
+    <button>Go to Leaderboard</button>
   </Link>
 )}
 
-{submittedRole === "bowler" && (
-  <Link to="/bowlingleaderboard">
-    <button>Bowling Leaderboard</button>
-  </Link>
-)}
       
     </div>
   );

@@ -4,17 +4,23 @@ import Cricket from "./SportsList/Cricket";
 import AddScore from "./components/CricketLeaderboard/UploadStats"
 import Leaderboard from "./components/CricketLeaderboard/Leaderboard"
 import UploadStats from "./components/CricketLeaderboard/UploadStats"
-import BowlingLeaderboard from "./components/CricketLeaderboard/BowlingLeaderboard"
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import MyScores from "./components/MyScores"
 
 function App() {
   return (
     <BrowserRouter>
+    <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
-         <Route path="/cricket" element={<Cricket />} />
-          <Route path="/cricleaderboard" element={<Leaderboard/>}></Route>
-          <Route path="/uploadstats" element={<UploadStats/>}></Route>
-          <Route path="/bowlingleaderboard" element={<BowlingLeaderboard/>}></Route>
+        <Route path="/cricket" element={<Cricket />} />
+        <Route path="/leaderboard/:role" element={<Leaderboard/>}></Route>
+        <Route path="/uploadstats" element={<UploadStats/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/register" element={<Register/>}></Route>
+        <Route path="/myscores" element={<MyScores/>}></Route>
       </Routes>
     </BrowserRouter>
   );

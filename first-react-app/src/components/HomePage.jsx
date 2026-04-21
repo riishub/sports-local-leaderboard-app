@@ -4,10 +4,21 @@ function HomePage(){
    
     return(
         <div>
-            <h1>Select the sport</h1>
+            <h1>Cricket Login</h1>
+            
+             <div>
+                <Link to="/login">
+                    <button>Login</button>
+                </Link>
+            </div>
+             <div>
+                <Link to="/register">
+                    <button>Register</button>
+                </Link>
+            </div>
             <div>
                 <Link to="/cricket">
-                    <button>Cricket</button>
+                    <button>cricket</button>
                 </Link>
             </div>
         </div>

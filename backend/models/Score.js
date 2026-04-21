@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 
 const scoreSchema = new mongoose.Schema({
     
+    username:String,
     role:String, //batter or bowler
 
     name:String,

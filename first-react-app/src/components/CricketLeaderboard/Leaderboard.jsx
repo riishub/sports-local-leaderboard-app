@@ -1,30 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 function Leaderboard() {
-  const [runs, setRuns] = useState([]);
+  const [data, setData] = useState([]);
   const [filter, setFilter] = useState("All");
   const [showFilter, setShowFilter] = useState(false);
 
+  const {role} = useParams(); 
+
   useEffect(() => {
-    fetch("http://localhost:5000/scores")
+    fetch(`http://localhost:5000/scores?role=${role}&location=${filter}`)
       .then((res) => res.json())
-      .then((data) => setRuns(data));
-  }, []);
+      .then((data) => setData(data));
+  }, [role,filter]);
 
-  const filteredScores =
-    filter === "All"
-      ? runs
-      : runs.filter((s) => s.location === filter);
-
-  const sortedScores = [...filteredScores].sort(
-    (a, b) => b.runs - a.runs
-  );
 
   return (
     <div className="container">
-      <h2>Leaderboard</h2>
+      <h2>{role==="bowler"?"Bowling":"Batting"} Leaderboard</h2>
 
       {/* FILTER BUTTON */}
       <button onClick={() => setShowFilter(!showFilter)}>
@@ -34,28 +28,23 @@ function Leaderboard() {
       {/* DROPDOWN */}
       {showFilter && (
         <div>
-          <button onClick={() => { setFilter("All"); setShowFilter(false); }}>
-            All
-          </button>
-
-          <button onClick={() => { setFilter("India"); setShowFilter(false); }}>
-            India
-          </button>
-
-          <button onClick={() => { setFilter("England"); setShowFilter(false); }}>
-            England
-          </button>
-
-          <button onClick={() => { setFilter("Australia"); setShowFilter(false); }}>
-            Australia
-          </button>
+          {["All","India","Australia","England"].map((loc)=>(
+            <button key={loc}
+              onClick={() => {
+                setFilter(loc);
+                setShowFilter(false);
+                }}
+                >
+                {loc}
+                </button>
+          ))}
         </div>
       )}
 
       <hr />
 
       {/* LEADERBOARD */}
-      {sortedScores.map((s, i) => (
+      {data.map((s, i) => (
         <div
           key={i}
           style={{
@@ -68,11 +57,16 @@ function Leaderboard() {
               }}
         >
           <span>{i + 1}. {s.name}</span>
-          <span>{s.runs}</span>
+          <span>
+            {role === "bowler" ? s.wickets : s.runs}
+          </span>
         </div>
       ))}
       <Link to="/uploadstats">
       <button>Upload stats</button>
+      </Link>
+       <Link to="/myscores">
+      <button>My scores</button>
       </Link>
     </div>
   );

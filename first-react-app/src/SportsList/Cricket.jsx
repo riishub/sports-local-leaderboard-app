@@ -1,20 +1,21 @@
 import {Link} from "react-router-dom"
 import {useState, useEffect} from "react"
-import Leaderboard from "../components/CricketLeaderboard/Leaderboard"
-import UploadStats from "../components/CricketLeaderboard/UploadStats"
+
 
 function Cricket(){
+    const username = localStorage.getItem("username");
     return(
         
         <div>
+            <h3>Logged in as: {username || "Guest"}</h3>
             <h1>cricket leaderboard</h1>
             <div>
-                <Link to="/cricleaderboard">
+                <Link to="/leaderboard/batter">
                     <button>Cricket batting leaderboard</button>
                 </Link>
             </div>
             <div>
-                <Link to="/bowlingleaderboard">
+                <Link to="/leaderboard/bowler">
                     <button>Cricket bowling leaderboard</button>
                 </Link>
             </div>
