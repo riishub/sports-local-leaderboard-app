@@ -22,7 +22,7 @@ function Login() {
 
     if (res.ok) {
       localStorage.setItem("username", data.username);
-      navigate("/cricket")
+      navigate("/")
     } else {
       alert(data.error);
     }

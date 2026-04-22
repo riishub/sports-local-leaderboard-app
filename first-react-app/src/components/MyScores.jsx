@@ -1,15 +1,20 @@
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { useState,useEffect } from "react"
 
 function MyScores(){
     const [myscores,setMyscores]=useState([])
     const username = localStorage.getItem("username")
-
+    const navigate = useNavigate()
     useEffect(() => {
     fetch(`http://localhost:5000/scores?username=${username}`)
       .then((res) => res.json())
       .then((data) => setMyscores(data));
-  }, []);
+  }, [username]);
+
+    const handleEdit=async(id)=>{
+        navigate(`/edit/${id}`)
+    }
+
 
     const handleDelete=async(id)=>{
         const res = await fetch(`http://localhost:5000/scores/${id}`,{
@@ -22,7 +27,7 @@ function MyScores(){
         const data=await res.json()
         alert(data.message||data.error)
         if(res.ok){
-            setMyscores((prev)=>prev.filter((s)=>s._id!==id))
+            setMyscores((prev)=>prev.filter((s)=>s._id!==id))  
         }
     }
 
@@ -38,6 +43,7 @@ function MyScores(){
                 <p>{s.date}</p>
                 <p>{s.role==="bowler"?s.wickets:s.runs}</p>
 
+                <button onClick={()=>handleEdit(s._id)}>Edit</button>
                 <button onClick={()=>handleDelete(s._id)}>Delete</button>
             </div>
             ))}

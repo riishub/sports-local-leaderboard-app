@@ -8,6 +8,8 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import MyScores from "./components/MyScores"
+import EditScore from "./components/CricketLeaderboard/EditScore"
+import AIAnalysis from "./components/AIAnalysis"
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/register" element={<Register/>}></Route>
         <Route path="/myscores" element={<MyScores/>}></Route>
+        <Route path="/edit/:id" element={<EditScore/>}></Route>
+        <Route path="/ai" element={<AIAnalysis />} />
       </Routes>
     </BrowserRouter>
   );
