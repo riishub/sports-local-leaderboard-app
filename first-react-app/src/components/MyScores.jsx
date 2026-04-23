@@ -6,7 +6,7 @@ function MyScores(){
     const username = localStorage.getItem("username")
     const navigate = useNavigate()
     useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/scores?username=${username}`)
+    fetch(`${import.meta.env.VITE_API_URL}/scores?username=${username}`)
       .then((res) => res.json())
       .then((data) => setMyscores(data));
   }, [username]);
@@ -17,7 +17,7 @@ function MyScores(){
 
 
     const handleDelete=async(id)=>{
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/scores/${id}`,{
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/scores/${id}`,{
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

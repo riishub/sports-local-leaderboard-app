@@ -8,7 +8,7 @@ function Register() {
   };
 
   const handleRegister = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
