@@ -16,7 +16,13 @@ const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash",
 });
 
-app.use(cors())
+app.use(cors({
+  
+  origin:[
+  "http://localhost:5000",
+  process.env.FRONTEND_URL
+  ]
+}));
 app.use(express.json())
 
 mongoose.connect(process.env.MONGO_URL)
