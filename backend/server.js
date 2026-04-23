@@ -23,6 +23,10 @@ mongoose.connect(process.env.MONGO_URL)
 .then(()=>console.log("mongodb connected"))
 .catch((e)=>console.log(e))
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 app.post("/register", async(req,res)=>{
     try{
       const existingUser = await User.findOne({ username: req.body.username });

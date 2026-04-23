@@ -20,7 +20,7 @@ function EditScore(){
     const username = localStorage.getItem("username")
 
     useEffect(()=>{
-       fetch(`http://localhost:5000/scores/${id}`)
+       fetch(`${process.env.REACT_APP_API_URL}/scores/${id}`)
       .then((res) => res.json())
       .then((data) => setformdata(data));
   }, [id]);
@@ -37,7 +37,7 @@ function EditScore(){
       alert("Please login first");
       return;
     }
-    const res = await fetch(`http://localhost:5000/scores/${id}`,{
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/scores/${id}`,{
         method: "PUT",
         headers:{
             "Content-Type":"application/json",

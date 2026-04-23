@@ -10,7 +10,7 @@ function Leaderboard() {
   const {role} = useParams(); 
 
   useEffect(() => {
-    fetch(`http://localhost:5000/scores?role=${role}&location=${filter}`)
+    fetch(`${process.env.REACT_APP_API_URL}/scores?role=${role}&location=${filter}`)
       .then((res) => res.json())
       .then((data) => setData(data));
   }, [role,filter]);

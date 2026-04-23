@@ -10,7 +10,7 @@ function AIAnalysis() {
     const today = new Date().toISOString().split("T")[0];
 
     const res = await fetch(
-      `http://localhost:5000/ai/analyze?role=${role}&date=${today}`
+      `${process.env.REACT_APP_API_URL}/ai/analyze?role=${role}&date=${today}`
     );
 
     const result = await res.json();

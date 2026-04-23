@@ -45,7 +45,7 @@ const handleChange = (e)=>{
         return;
       }
       try{
-      const res = await fetch("http://localhost:5000/scores", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/scores`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
